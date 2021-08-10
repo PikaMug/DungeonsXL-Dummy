@@ -28,6 +28,7 @@ import de.erethon.dungeonsxl.api.sign.DungeonSign;
 import de.erethon.dungeonsxl.api.world.EditWorld;
 import de.erethon.dungeonsxl.api.world.GameWorld;
 import de.erethon.dungeonsxl.api.world.InstanceWorld;
+import de.erethon.dungeonsxl.util.commons.misc.Registry;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.NamespacedKey;
@@ -74,6 +75,7 @@ public class DungeonsXL extends DREPlugin implements DungeonsAPI {
     private Collection<GroupAdapter> groupAdapters = new HashSet<>();
     private PlayerCache playerCache;
     private Collection<Game> gameCache;
+    private Registry<String, PlayerGroup> playerGroupCache;
 
     /* Global state variables */
     private boolean loaded, loadingWorld;
@@ -161,6 +163,10 @@ public class DungeonsXL extends DREPlugin implements DungeonsAPI {
         return gameCache;
     }
 
+    public Registry<String, PlayerGroup> getGroupCache() {
+        return playerGroupCache;
+    }
+
     @Override
     public void registerModule(DungeonModule module) {
         modules.add(module);
@@ -168,7 +174,6 @@ public class DungeonsXL extends DREPlugin implements DungeonsAPI {
 
     @Override
     public void registerGroupAdapter(GroupAdapter groupAdapter) {
-
     }
 
     @Override
