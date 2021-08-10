@@ -36,19 +36,6 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
-                        <configuration>
-                            <artifactSet>
-                                <includes>
-                                    <include>de.erethon.commons:commons-dist</include>
-                                </includes>
-                            </artifactSet>                            
-                            <relocations>	
-                                <relocation>
-                                    <pattern>de.erethon.commons</pattern>	
-                                    <shadedPattern>de.erethon.dungeonsxl.util.commons</shadedPattern>	
-                                </relocation>
-                            </relocations>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -60,18 +47,6 @@
             <artifactId>spigot-api</artifactId>
             <version>${spigotVersion.latest}</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>de.erethon.commons</groupId>
-            <artifactId>commons-dist</artifactId>
-            <version>6.2.5</version>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 </project>

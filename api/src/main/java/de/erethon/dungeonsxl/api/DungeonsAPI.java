@@ -14,30 +14,23 @@
  */
 package de.erethon.dungeonsxl.api;
 
-import de.erethon.caliburn.CaliburnAPI;
-import de.erethon.caliburn.mob.ExMob;
-import de.erethon.commons.misc.Registry;
 import de.erethon.dungeonsxl.api.dungeon.Dungeon;
 import de.erethon.dungeonsxl.api.dungeon.Game;
-import de.erethon.dungeonsxl.api.dungeon.GameRule;
 import de.erethon.dungeonsxl.api.mob.DungeonMob;
-import de.erethon.dungeonsxl.api.mob.ExternalMobProvider;
 import de.erethon.dungeonsxl.api.player.GroupAdapter;
 import de.erethon.dungeonsxl.api.player.PlayerCache;
-import de.erethon.dungeonsxl.api.player.PlayerClass;
 import de.erethon.dungeonsxl.api.player.PlayerGroup;
-import de.erethon.dungeonsxl.api.sign.DungeonSign;
 import de.erethon.dungeonsxl.api.world.EditWorld;
 import de.erethon.dungeonsxl.api.world.GameWorld;
-import de.erethon.dungeonsxl.api.world.InstanceWorld;
-import de.erethon.dungeonsxl.api.world.ResourceWorld;
-import java.io.File;
-import java.util.Collection;
+import org.bukkit.Color;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+
+import java.io.File;
+import java.util.Collection;
 
 /**
  * The API main interface.
@@ -56,13 +49,6 @@ public interface DungeonsAPI extends Plugin {
     static final File DUNGEONS = new File(SCRIPTS, "dungeons");
 
     /**
-     * Returns the loaded instance of the Caliburn API.
-     *
-     * @return the loaded instance of the Caliburn API
-     */
-    CaliburnAPI getCaliburn();
-
-    /**
      * Returns a cache of player wrapper objects.
      *
      * @return a cache of player wrapper objects
@@ -75,76 +61,6 @@ public interface DungeonsAPI extends Plugin {
      * @return a cache of Game objects
      */
     Collection<Game> getGameCache();
-
-    /**
-     * Returns a registry of the loaded classes.
-     *
-     * @return a registry of the loaded classes
-     */
-    Registry<String, PlayerClass> getClassRegistry();
-
-    /**
-     * Returns a registry of the sign types.
-     *
-     * @return a registry of the sign types
-     */
-    Registry<String, Class<? extends DungeonSign>> getSignRegistry();
-
-    /**
-     * Returns a registry of the requirement types.
-     *
-     * @return a registry of the requirement types
-     */
-    Registry<String, Class<? extends Requirement>> getRequirementRegistry();
-
-    /**
-     * Returns a registry of the reward types.
-     *
-     * @return a registry of the reward types
-     */
-    Registry<String, Class<? extends Reward>> getRewardRegistry();
-
-    /**
-     * Returns a registry of the dungeons.
-     *
-     * @return a registry of the dungeons
-     */
-    Registry<String, Dungeon> getDungeonRegistry();
-
-    /**
-     * Returns a registry of the resources worlds.
-     *
-     * @return a registry of the resources worlds
-     */
-    Registry<String, ResourceWorld> getMapRegistry();
-
-    /**
-     * Returns a cache of the instance worlds.
-     *
-     * @return a cache of the instance worlds
-     */
-    Registry<Integer, InstanceWorld> getInstanceCache();
-
-    /**
-     * Returns a registry of the game rules.
-     *
-     * @return a registry of the game rules
-     */
-    Registry<String, GameRule> getGameRuleRegistry();
-
-    /**
-     * Returns a registry of the external mob providers.
-     *
-     * @return a registry of the external mob providers
-     */
-    Registry<String, ExternalMobProvider> getExternalMobProviderRegistry();
-
-    /**
-     * Returns a cache of the player groups.
-     *
-     * @return a cache of the player groups
-     */
-    Registry<String, PlayerGroup> getGroupCache();
 
     /**
      * Registers a DungeonModule.
@@ -176,7 +92,7 @@ public interface DungeonsAPI extends Plugin {
      * @param color  the color that represents the group and sets the name
      * @return a new group or null if values are invalid
      */
-    PlayerGroup createGroup(Player leader, PlayerGroup.Color color);
+    PlayerGroup createGroup(Player leader, Color color);
 
     /**
      * Creates a new group.
@@ -216,27 +132,6 @@ public interface DungeonsAPI extends Plugin {
      * @return the wrapped DungeonMob
      */
     DungeonMob wrapEntity(LivingEntity entity, GameWorld gameWorld, String triggerId);
-
-    /**
-     * Wraps the given {@link LivingEntity} object in a {@link DungeonMob} object.
-     *
-     * @param entity    the entity
-     * @param gameWorld the game world where the entity is
-     * @param type      the ExMob type of the entity
-     * @return the wrapped DungeonMob
-     */
-    DungeonMob wrapEntity(LivingEntity entity, GameWorld gameWorld, ExMob type);
-
-    /**
-     * Wraps the given {@link LivingEntity} object in a {@link DungeonMob} object.
-     *
-     * @param entity    the entity
-     * @param gameWorld the game world where the entity is
-     * @param type      the ExMob type of the entity
-     * @param triggerId the identifier used in mob triggers
-     * @return the wrapped DungeonMob
-     */
-    DungeonMob wrapEntity(LivingEntity entity, GameWorld gameWorld, ExMob type, String triggerId);
 
     /* Getters */
     /**

@@ -14,10 +14,6 @@
  */
 package de.erethon.dungeonsxl.api;
 
-import de.erethon.commons.misc.Registry;
-import de.erethon.dungeonsxl.api.dungeon.GameRule;
-import de.erethon.dungeonsxl.api.sign.DungeonSign;
-
 /**
  * Class that manages initialization of several registries.
  * <p>
@@ -26,33 +22,4 @@ import de.erethon.dungeonsxl.api.sign.DungeonSign;
  * @author Daniel Saukel
  */
 public interface DungeonModule {
-
-    /**
-     * Initializes the {@link de.erethon.dungeonsxl.api.Requirement requirement} registry.
-     *
-     * @param requirementRegistry the registry
-     */
-    void initRequirements(Registry<String, Class<? extends Requirement>> requirementRegistry);
-
-    /**
-     * Initializes the {@link de.erethon.dungeonsxl.api.Reward reward} registry.
-     *
-     * @param rewardRegistry the registry
-     */
-    void initRewards(Registry<String, Class<? extends Reward>> rewardRegistry);
-
-    /**
-     * Initializes the {@link de.erethon.dungeonsxl.api.sign.DungeonSign dungeon sign} registry.
-     *
-     * @param signRegistry the registry
-     */
-    void initSigns(Registry<String, Class<? extends DungeonSign>> signRegistry);
-
-    /**
-     * Initializes the {@link de.erethon.dungeonsxl.api.dungeon.GameRule game rule} registry.
-     *
-     * @param gameRuleRegistry the registry
-     */
-    void initGameRules(Registry<String, GameRule> gameRuleRegistry);
-
 }

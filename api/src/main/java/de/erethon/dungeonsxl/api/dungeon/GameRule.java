@@ -14,26 +14,18 @@
  */
 package de.erethon.dungeonsxl.api.dungeon;
 
-import de.erethon.caliburn.item.ExItem;
-import de.erethon.caliburn.mob.ExMob;
-import de.erethon.commons.chat.MessageUtil;
-import de.erethon.commons.misc.EnumUtil;
-import de.erethon.commons.misc.NumberUtil;
 import de.erethon.dungeonsxl.api.DungeonsAPI;
 import de.erethon.dungeonsxl.api.Requirement;
 import de.erethon.dungeonsxl.api.Reward;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.ConfigurationSection;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a game rule for a {@link Game}.
@@ -104,38 +96,6 @@ public class GameRule<V> {
      * If players may destroy blocks they placed themselves.
      */
     public static final GameRule<Boolean> BREAK_PLACED_BLOCKS = new GameRule<>(Boolean.class, "breakPlacedBlocks", false);
-    /**
-     * A whitelist of breakable blocks. breakBlocks is supposed to be set to "true" if this should be used.
-     */
-    public static final GameRule<Map<ExItem, HashSet<ExItem>>> BREAK_WHITELIST
-            = new MapGameRule<>("breakWhitelist", new HashMap<>(), ConfigReader.TOOL_BLOCK_MAP_READER, HashMap::new);
-    /**
-     * A blacklist of block types players cannot interact with.
-     */
-    public static final GameRule<Map<ExItem, HashSet<ExItem>>> INTERACTION_BLACKLIST
-            = new MapGameRule<>("interactionBlacklist", new HashMap<>(), ConfigReader.TOOL_BLOCK_MAP_READER, HashMap::new);
-    /**
-     * A list of all entity types that shall be protected from damage.
-     */
-    public static final GameRule<Set<ExMob>> DAMAGE_PROTECTED_ENTITIES = new CollectionGameRule<>("damageProtectedEntities", new HashSet<>(), ConfigReader.EX_MOB_SET_READER, HashSet::new);
-    /**
-     * A list of all entity types that shall be protected from interaction.
-     */
-    public static final GameRule<Set<ExMob>> INTERACTION_PROTECTED_ENTITIES = new CollectionGameRule<>("interactionProtectedEntities", new HashSet<>(), ConfigReader.EX_MOB_SET_READER, HashSet::new);
-    /**
-     * If blocks may be placed.
-     */
-    public static final GameRule<Boolean> PLACE_BLOCKS = new GameRule<>(Boolean.class, "placeBlocks", false);
-    /**
-     * A whitelist of placeable blocks. placeBlocks is supposed to be set to "true" if this should be used.
-     */
-    public static final GameRule<Set<ExItem>> PLACE_WHITELIST = new CollectionGameRule<>("placeWhitelist", new HashSet<>(), ConfigReader.EX_ITEM_SET_READER, HashSet::new);
-    /**
-     * A set of blocks that do not fade.
-     *
-     * @see <a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/block/BlockFadeEvent.html">org.bukkit.event.block.BlockFadeEvent</a>
-     */
-    public static final GameRule<Set<ExItem>> BLOCK_FADE_DISABLED = new CollectionGameRule<>("blockFadeDisabled", new HashSet<>(), ConfigReader.EX_ITEM_SET_READER, HashSet::new);
     /**
      * This does what the doFireTick Vanilla game rule does.
      */
@@ -217,26 +177,6 @@ public class GameRule<V> {
         }
         ConfigurationSection section = (ConfigurationSection) value;
         List<Requirement> requirements = new ArrayList<>();
-        for (String key : section.getValues(false).keySet()) {
-            Class<? extends Requirement> clss = api.getRequirementRegistry().get(key);
-            if (clss == null) {
-                MessageUtil.log(api, "&4Could not find requirement named \"" + key + "\".");
-                continue;
-            }
-            try {
-                Constructor constructor = clss.getConstructor(DungeonsAPI.class);
-                if (constructor == null) {
-                    MessageUtil.log(api, "&4Requirement \"" + key + "\" is not implemented properly with a (DungeonsAPI) constructor.");
-                    continue;
-                }
-                Requirement requirement = (Requirement) constructor.newInstance(api);
-                requirement.setup(section);
-                requirements.add(requirement);
-            } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
-                    | IllegalArgumentException | InvocationTargetException exception) {
-                MessageUtil.log(api, "&4Requirement \"" + key + "\" is not implemented properly with a (DungeonsAPI) constructor.");
-            }
-        }
         return requirements;
     }, ArrayList::new);
     /**
@@ -256,26 +196,6 @@ public class GameRule<V> {
         }
         ConfigurationSection section = (ConfigurationSection) value;
         List<Reward> rewards = new ArrayList<>();
-        for (String key : section.getValues(false).keySet()) {
-            Class<? extends Reward> clss = api.getRewardRegistry().get(key);
-            if (clss == null) {
-                MessageUtil.log(api, "&4Could not find reward named \"" + key + "\".");
-                continue;
-            }
-            try {
-                Constructor constructor = clss.getConstructor(DungeonsAPI.class);
-                if (constructor == null) {
-                    MessageUtil.log(api, "&4Reward \"" + key + "\" is not implemented properly with a (DungeonsAPI) constructor.");
-                    continue;
-                }
-                Reward reward = (Reward) constructor.newInstance(api);
-                // reward.setup();
-                rewards.add(reward);
-            } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
-                    | IllegalArgumentException | InvocationTargetException exception) {
-                MessageUtil.log(api, "&4Reward \"" + key + "\" is not implemented properly with a (DungeonsAPI) constructor.");
-            }
-        }
         return rewards;
     }, ArrayList::new);
     /**
@@ -324,22 +244,8 @@ public class GameRule<V> {
         }
         ConfigurationSection section = (ConfigurationSection) value;
         Map<Integer, String> map = new HashMap<>();
-        for (Map.Entry<String, Object> entry : section.getValues(false).entrySet()) {
-            int id = NumberUtil.parseInt(entry.getKey(), -1);
-            if (id == -1) {
-                continue;
-            }
-            if (!(entry.getValue() instanceof String)) {
-                continue;
-            }
-            map.put(id, (String) entry.getValue());
-        }
         return map;
     }, HashMap::new);
-    /**
-     * Items you cannot drop or destroy.
-     */
-    public static final GameRule<Set<ExItem>> SECURE_OBJECTS = new CollectionGameRule<>("secureObjects", new HashSet<>(), ConfigReader.EX_ITEM_SET_READER, HashSet::new);
     /**
      * If group tags are used.
      */
@@ -442,13 +348,6 @@ public class GameRule<V> {
             V v = reader.read(api, value);
             container.setState(this, v);
             return v;
-        }
-
-        if (Enum.class.isAssignableFrom(type)) {
-            if (!(value instanceof String)) {
-                return null;
-            }
-            value = EnumUtil.getEnumIgnoreCase((Class<? extends Enum>) type, (String) value);
         }
 
         if (isValidValue(value)) {

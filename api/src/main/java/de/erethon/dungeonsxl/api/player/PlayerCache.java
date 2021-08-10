@@ -14,20 +14,108 @@
  */
 package de.erethon.dungeonsxl.api.player;
 
-import de.erethon.commons.misc.Registry;
-import java.util.ArrayList;
+import de.erethon.dungeonsxl.api.dungeon.Dungeon;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
-import org.bukkit.entity.Player;
 
 /**
  * @author Daniel Saukel
  */
-public class PlayerCache extends Registry<Player, GlobalPlayer> {
+public class PlayerCache {
 
     public GlobalPlayer get(UUID uuid) {
-        return getFirstIf(p -> p.getUniqueId().equals(uuid));
+        return new GlobalPlayer() {
+            @Override
+            public PlayerGroup getGroup() {
+                return null;
+            }
+
+            @Override
+            public boolean isInGroupChat() {
+                return false;
+            }
+
+            @Override
+            public void setInGroupChat(boolean groupChat) {
+
+            }
+
+            @Override
+            public boolean isInChatSpyMode() {
+                return false;
+            }
+
+            @Override
+            public void setInChatSpyMode(boolean chatSpyMode) {
+
+            }
+
+            @Override
+            public boolean hasPermission(String permission) {
+                return false;
+            }
+
+            @Override
+            public List<ItemStack> getRewardItems() {
+                return null;
+            }
+
+            @Override
+            public void setRewardItems(List<ItemStack> rewardItems) {
+
+            }
+
+            @Override
+            public boolean hasRewardItemsLeft() {
+                return false;
+            }
+
+            @Override
+            public boolean isInBreakMode() {
+                return false;
+            }
+
+            @Override
+            public void setInBreakMode(boolean breakMode) {
+
+            }
+
+            @Override
+            public void reset(boolean gameFinished) {
+
+            }
+
+            @Override
+            public void reset(Location tpLoc, boolean keepInventory) {
+
+            }
+
+            @Override
+            public boolean checkRequirements(Dungeon dungeon) {
+                return false;
+            }
+
+            @Override
+            public Player getPlayer() {
+                return null;
+            }
+
+            @Override
+            public String getName() {
+                return null;
+            }
+
+            @Override
+            public UUID getUniqueId() {
+                return null;
+            }
+        };
     }
 
     public InstancePlayer getInstancePlayer(Player player) {
@@ -49,15 +137,6 @@ public class PlayerCache extends Registry<Player, GlobalPlayer> {
      * @return the first InstancePlayer that satisfies the given predicate
      */
     public InstancePlayer getFirstInstancePlayerIf(Predicate<InstancePlayer> predicate) {
-        for (GlobalPlayer element : elements.values()) {
-            if (!(element instanceof InstancePlayer)) {
-                continue;
-            }
-            InstancePlayer instancePlayer = (InstancePlayer) element;
-            if (predicate.test(instancePlayer)) {
-                return instancePlayer;
-            }
-        }
         return null;
     }
 
@@ -68,15 +147,6 @@ public class PlayerCache extends Registry<Player, GlobalPlayer> {
      * @return the first EditPlayer that satisfies the given predicate
      */
     public EditPlayer getFirstEditPlayerIf(Predicate<EditPlayer> predicate) {
-        for (GlobalPlayer element : elements.values()) {
-            if (!(element instanceof EditPlayer)) {
-                continue;
-            }
-            EditPlayer editPlayer = (EditPlayer) element;
-            if (predicate.test(editPlayer)) {
-                return editPlayer;
-            }
-        }
         return null;
     }
 
@@ -87,15 +157,6 @@ public class PlayerCache extends Registry<Player, GlobalPlayer> {
      * @return the first GamePlayer that satisfies the given predicate
      */
     public GamePlayer getFirstGamePlayerIf(Predicate<GamePlayer> predicate) {
-        for (GlobalPlayer element : elements.values()) {
-            if (!(element instanceof GamePlayer)) {
-                continue;
-            }
-            GamePlayer gamePlayer = (GamePlayer) element;
-            if (predicate.test(gamePlayer)) {
-                return gamePlayer;
-            }
-        }
         return null;
     }
 
@@ -106,17 +167,7 @@ public class PlayerCache extends Registry<Player, GlobalPlayer> {
      * @return all InstancePlayers that satisfy the given predicate
      */
     public Collection<InstancePlayer> getAllInstancePlayersIf(Predicate<InstancePlayer> predicate) {
-        Collection<InstancePlayer> checked = new ArrayList<>();
-        for (GlobalPlayer element : elements.values()) {
-            if (!(element instanceof InstancePlayer)) {
-                continue;
-            }
-            InstancePlayer instancePlayer = (InstancePlayer) element;
-            if (predicate.test(instancePlayer)) {
-                checked.add(instancePlayer);
-            }
-        }
-        return checked;
+        return null;
     }
 
     /**
@@ -126,17 +177,7 @@ public class PlayerCache extends Registry<Player, GlobalPlayer> {
      * @return all EditPlayer that satisfy the given predicate
      */
     public Collection<EditPlayer> getAllEditPlayersIf(Predicate<EditPlayer> predicate) {
-        Collection<EditPlayer> checked = new ArrayList<>();
-        for (GlobalPlayer element : elements.values()) {
-            if (!(element instanceof EditPlayer)) {
-                continue;
-            }
-            EditPlayer editPlayer = (EditPlayer) element;
-            if (predicate.test(editPlayer)) {
-                checked.add(editPlayer);
-            }
-        }
-        return checked;
+        return null;
     }
 
     /**
@@ -146,17 +187,7 @@ public class PlayerCache extends Registry<Player, GlobalPlayer> {
      * @return all GamePlayer that satisfy the given predicate
      */
     public Collection<GamePlayer> getAllGamePlayersIf(Predicate<GamePlayer> predicate) {
-        Collection<GamePlayer> checked = new ArrayList<>();
-        for (GlobalPlayer element : elements.values()) {
-            if (!(element instanceof GamePlayer)) {
-                continue;
-            }
-            GamePlayer gamePlayer = (GamePlayer) element;
-            if (predicate.test(gamePlayer)) {
-                checked.add(gamePlayer);
-            }
-        }
-        return checked;
+        return null;
     }
 
     /**
@@ -165,13 +196,7 @@ public class PlayerCache extends Registry<Player, GlobalPlayer> {
      * @return all InstancePlayers
      */
     public Collection<InstancePlayer> getAllInstancePlayers() {
-        Collection<InstancePlayer> checked = new ArrayList<>();
-        for (GlobalPlayer element : elements.values()) {
-            if (element instanceof InstancePlayer) {
-                checked.add((InstancePlayer) element);
-            }
-        }
-        return checked;
+        return null;
     }
 
     /**
@@ -180,13 +205,7 @@ public class PlayerCache extends Registry<Player, GlobalPlayer> {
      * @return all EditPlayers
      */
     public Collection<EditPlayer> getAllEditPlayers() {
-        Collection<EditPlayer> checked = new ArrayList<>();
-        for (GlobalPlayer element : elements.values()) {
-            if (element instanceof EditPlayer) {
-                checked.add((EditPlayer) element);
-            }
-        }
-        return checked;
+        return null;
     }
 
     /**
@@ -195,13 +214,6 @@ public class PlayerCache extends Registry<Player, GlobalPlayer> {
      * @return all GamePlayers
      */
     public Collection<GamePlayer> getAllGamePlayers() {
-        Collection<GamePlayer> checked = new ArrayList<>();
-        for (GlobalPlayer element : elements.values()) {
-            if (element instanceof GamePlayer) {
-                checked.add((GamePlayer) element);
-            }
-        }
-        return checked;
+        return null;
     }
-
 }

@@ -14,12 +14,10 @@
  */
 package de.erethon.dungeonsxl.api.player;
 
-import de.erethon.caliburn.CaliburnAPI;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -37,26 +35,20 @@ public class PlayerClass {
     /**
      * Creates a PlayerClass from a class YAML file. The name is taken from the file name.
      *
-     * @param caliburn the CaliburnAPI instance
      * @param file     the class config file
      */
-    public PlayerClass(CaliburnAPI caliburn, File file) {
-        this(caliburn, file.getName().substring(0, file.getName().length() - 4), YamlConfiguration.loadConfiguration(file));
+    public PlayerClass(File file) {
+
     }
 
     /**
      * Creates a PlayerClass from the given class config.
      *
-     * @param caliburn the CaliburnAPI instance
      * @param name     the class name
      * @param config   the config
      */
-    public PlayerClass(CaliburnAPI caliburn, String name, FileConfiguration config) {
+    public PlayerClass(String name, FileConfiguration config) {
         this.name = name;
-
-        if (config.contains("items")) {
-            items = caliburn.deserializeStackList(config, "items");
-        }
 
         if (config.contains("dog")) {
             dog = config.getBoolean("dog");

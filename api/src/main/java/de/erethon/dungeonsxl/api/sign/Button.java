@@ -34,24 +34,12 @@ public abstract class Button extends AbstractDSign {
     }
 
     /**
-     * When the sign is triggered without one particular player being the cause.
-     * <p>
-     * <b>Note that the default implementation of {@link #push(org.bukkit.entity.Player)} assumes that the sign does not need player specific behavior and
-     * simply calls this method, while the default implementation of this method assumes that the sign should perform {@link #push(org.bukkit.entity.Player)}
-     * for each player in the game world. This leaves a button sign with a stackoverflow if not one of both methods at least is overriden. Consider using a
-     * {@link Passive} sign instead if you need a sign that simply marks places and ignores being triggered.</b>
-     */
-    public void push() {
-        getGameWorld().getPlayers().forEach(p -> push(p.getPlayer()));
-    }
-
-    /**
      * When the sign is triggered.
      * <p>
      * This is the default {@link #trigger(org.bukkit.entity.Player)} behavior.
      * <p>
-     * <b>Note that the default implementation of this method assumes that the sign does not need player specific behavior and simply calls {@link #push()},
-     * while the default implementation of {@link #push()} assumes that the sign should perform {@link #push(org.bukkit.entity.Player)} for each player in the
+     * <b>Note that the default implementation of this method assumes that the sign does not need player specific behavior and simply calls ,
+     * while the default implementation of assumes that the sign should perform {@link #push(org.bukkit.entity.Player)} for each player in the
      * game world. This leaves a button sign with a stackoverflow if not one of both methods at least is overriden. Consider using a {@link Passive} sign
      * instead if you need a sign that simply marks places and ignores being triggered.</b>
      *
@@ -59,7 +47,6 @@ public abstract class Button extends AbstractDSign {
      * @return if the action is done successfully
      */
     public boolean push(Player player) {
-        push();
         return true;
     }
 
@@ -72,8 +59,6 @@ public abstract class Button extends AbstractDSign {
     public void trigger(Player player) {
         if (player != null) {
             push(player);
-        } else {
-            push();
         }
     }
 

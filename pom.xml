@@ -8,13 +8,9 @@
     <url>https://dre2n.github.io</url>
     <description>Create custom dungeons and adventure maps with ease!</description>
     <modules>
-        <module>adapter</module>
         <module>api</module>
-        <module>bukkit_blockdata</module>
-        <module>bukkit_magicvalues</module>
         <module>core</module>
         <module>dist</module>
-        <module>addon</module>
     </modules>
     <properties>
         <buildNo></buildNo>
@@ -23,28 +19,10 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <spigotVersion.latest>1.17.1-R0.1-SNAPSHOT</spigotVersion.latest>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>de.erethon</groupId>
-            <artifactId>caliburn</artifactId>
-            <version>1.0.2</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>de.erethon.vignette</groupId>
-            <artifactId>vignette-dist</artifactId>
-            <version>1.0-SNAPSHOT-24</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
     <repositories>
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-        </repository>
-        <repository>
-            <id>dre-repo</id>
-            <url>https://erethon.de/repo</url>
         </repository>
     </repositories>
 </project>

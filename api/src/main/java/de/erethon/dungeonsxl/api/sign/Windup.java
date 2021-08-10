@@ -131,7 +131,6 @@ public abstract class Windup extends Deactivatable {
         this.n = n;
     }
 
-    @Override
     public void activate() {
         if (interval <= 0) {
             for (int k = 0; k < n; k++) {
@@ -146,7 +145,6 @@ public abstract class Windup extends Deactivatable {
     /**
      * Cancels the {@link #getTask() task}.
      */
-    @Override
     public void deactivate() {
         active = false;
         if (getTask() != null) {
@@ -161,13 +159,6 @@ public abstract class Windup extends Deactivatable {
      */
     @Override
     public void trigger(Player player) {
-        if (!isActive()) {
-            if (player != null) {
-                activate(player);
-            } else {
-                activate();
-            }
-        }
     }
 
     /**

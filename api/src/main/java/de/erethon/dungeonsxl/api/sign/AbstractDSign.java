@@ -14,8 +14,6 @@
  */
 package de.erethon.dungeonsxl.api.sign;
 
-import de.erethon.caliburn.item.VanillaItem;
-import de.erethon.commons.chat.MessageUtil;
 import de.erethon.dungeonsxl.api.DungeonsAPI;
 import de.erethon.dungeonsxl.api.Trigger;
 import de.erethon.dungeonsxl.api.world.EditWorld;
@@ -97,7 +95,6 @@ public abstract class AbstractDSign implements DungeonSign {
 
     @Override
     public boolean setToAir() {
-        sign.getBlock().setType(VanillaItem.AIR.getMaterial());
         return true;
     }
 
@@ -114,9 +111,6 @@ public abstract class AbstractDSign implements DungeonSign {
         sign.setLine(2, ERROR_2);
         sign.setLine(3, ERROR_3);
         sign.update();
-
-        MessageUtil.log(api, "&4A sign at &6" + sign.getX() + ", " + sign.getY() + ", " + sign.getZ() + "&4 is erroneous!");
-        MessageUtil.log(api, getName() + ": " + reason);
     }
 
 }

@@ -14,7 +14,6 @@
  */
 package de.erethon.dungeonsxl.api.mob;
 
-import de.erethon.caliburn.mob.ExMob;
 import org.bukkit.entity.LivingEntity;
 
 /**
@@ -30,22 +29,6 @@ public interface DungeonMob {
      * @return the entity that is wrapped by this object
      */
     LivingEntity getEntity();
-
-    /**
-     * Returns the Caliburn representation of the mob or null if it is spawned by an external plugin.
-     *
-     * @return the Caliburn representation of the mob or null if it is spawned by an external plugin
-     */
-    ExMob getType();
-
-    /**
-     * Returns if the mob is spawned by an external plugin.
-     *
-     * @return if the mob is spawned by an external plugin
-     */
-    default boolean isExternalMob() {
-        return getType() == null;
-    }
 
     /**
      * Returns the String used to identify this mob for example in the context of triggers.
