@@ -272,6 +272,11 @@ public class DungeonsXL extends DREPlugin implements DungeonsAPI {
 
     @Override
     public PlayerGroup getPlayerGroup(Player member) {
+        for (PlayerGroup group : playerGroupCache) {
+            if (group.getMembers().contains(member)) {
+                return group;
+            }
+        }
         return null;
     }
 
